@@ -25,5 +25,10 @@
 			"minikube": "none"
 		},
 		"azure-cli": "latest"
-	}
+	},
+	"remoteEnv": {
+		"DOCKER_BUILDKIT": "1"
+	},
+	"postCreateCommand": ".devcontainer/scripts/postCreate.sh",
+	"postStartCommand": ".devcontainer/scripts/postStart.sh"
 }

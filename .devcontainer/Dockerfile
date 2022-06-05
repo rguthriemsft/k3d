@@ -19,7 +19,5 @@ RUN RELEASE=$(curl https://api.github.com/repos/vmware-tanzu/octant/releases/lat
   && tar xvf "octant_${RELEASE}_Linux-64bit.tar.gz" \
   && mv "./octant_${RELEASE}_Linux-64bit/octant" /usr/local/bin/octant
 
-RUN curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | sh
-
 USER vscode
 
