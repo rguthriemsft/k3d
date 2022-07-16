@@ -9,9 +9,15 @@ k3d cluster create istio-playground --servers 1 --agents 3 --port 9080:80@loadba
 - `--servers 1` there will be one server node for the control plane.
 - `--agents 3` there will be 3 nodes to run containers on
 - `--port 9080:80@loadbalancer` the load balancer (in docker, which is exposed), will forward requests to port 9080 to 80 in the k8 cluster, you can check this out after creation by running docker ps
-- `--port 944:443@loadbalancer` same as above, just for HTTPS (later)
+- `--port 9443:443@loadbalancer` same as above, just for HTTPS (later)
 - `--api-port 6443` the k8 API port will be port 6443 instead of randomly generated
 - `--k3s-arg='--disable=traefik@server:0'` tell k3d to not deploy the Traefik v1 ingress controller
+
+```bash
+# Alternative simpler istio setup
+
+k3d cluster create istio-playground --k3s-arg='--disable=traefik@server:0'
+```
 
 **NOTE** I also have octant running on the dev container so can restart it by running
 
@@ -22,7 +28,7 @@ nohup bash -c 'octant --disable-origin-check --disable-open-browser &' > ./.devc
 ## Docker ps to check everything is working
 
 ```bash
-vscode ➜ /workspaces/k3d (istio ✗) $ docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Ports}}'
+$ docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Ports}}'
 
 CONTAINER ID   IMAGE                            NAMES                           PORTS
 31ab70b634e8   ghcr.io/k3d-io/k3d-proxy:5.4.4   k3d-istio-playground-serverlb   0.0.0.0:6443->6443/tcp, 0.0.0.0:9080->80/tcp, 0.0.0.0:9443->443/tcp
@@ -30,6 +36,7 @@ CONTAINER ID   IMAGE                            NAMES                           
 4353f4b77119   rancher/k3s:v1.23.8-k3s1         k3d-istio-playground-agent-1    
 0ef708df5271   rancher/k3s:v1.23.8-k3s1         k3d-istio-playground-agent-0    
 e9665d8f41bd   rancher/k3s:v1.23.8-k3s1         k3d-istio-playground-server-0   
+
 ```
 
 ## Install Istio
@@ -162,3 +169,5 @@ curl http://127.0.0.1:9080
 - https://brettmostert.medium.com/k3d-kubernetes-up-and-running-quickly-d80f47bab48e
 - https://dev.to/bufferings/tried-k8s-istio-in-my-local-machine-with-k3d-52gg
 - https://www.udemy.com/course/istio-hands-on-for-kubernetes/learn/lecture/16779002?start=0#content
+- https://www.tetrate.io/blog/debugging-your-istio-networking-configuration/
+- https://docs.tetrate.io/blog/debugging-services-with-istio/
