@@ -23,3 +23,7 @@ virtual gateways are how you expose resources outside the cluster or on the edge
 ### Links
 
 - https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/
+
+### Prefix Routing
+
+- https://istio.io/latest/docs/reference/config/networking/virtual-service/ has example of prefix based routing
